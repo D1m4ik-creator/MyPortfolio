@@ -2,7 +2,7 @@
 
 Персональный сайт Python Backend-разработчика: профиль, технологический стек, проекты, достижения и контакты.
 
-Сайт: https://dmitry-litvinov-backend.litvinov06062006.chatgpt.site
+Публичный сайт: https://myportfoli.up.railway.app
 
 ## Структура
 
