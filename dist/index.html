@@ -45,6 +45,16 @@
       background-size: 52px 52px;
       mask-image: linear-gradient(to bottom, black, transparent 88%);
     }
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background: radial-gradient(circle 430px at var(--mx) var(--my), rgba(124,236,255,.14), rgba(164,255,207,.045) 36%, transparent 72%);
+      mix-blend-mode: screen;
+    }
+    main, footer { position: relative; z-index: 1; }
     a { color: inherit; }
     .aurora { position: fixed; inset: 0; overflow: hidden; pointer-events: none; z-index: -1; }
     .blob { position: absolute; border-radius: 46% 54% 62% 38%; filter: blur(34px); opacity: .22; animation: drift 16s ease-in-out infinite alternate; }
@@ -83,25 +93,28 @@
     .btn.secondary { background: rgba(255,255,255,.045); }
     .btn svg { width: 18px; height: 18px; }
     .portrait { position: relative; aspect-ratio: .82; border-radius: 48% 52% 42% 58% / 55% 42% 58% 45%; display: grid; place-items: center; overflow: hidden; isolation: isolate; }
-    .portrait::before { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at 30% 18%, rgba(255,255,255,.26), transparent 28%), linear-gradient(145deg, rgba(124,236,255,.2), rgba(157,140,255,.12) 50%, rgba(164,255,207,.16)); }
-    .portrait::after { content: ""; position: absolute; inset: 15px; z-index: -1; border-radius: inherit; border: 1px solid rgba(255,255,255,.15); }
-    .initials { font: 700 clamp(5rem, 14vw, 9rem)/1 "Segoe UI Variable Display", "Segoe UI", system-ui, sans-serif; letter-spacing: -.08em; color: rgba(255,255,255,.92); text-shadow: 0 12px 44px rgba(0,0,0,.35); }
-    .orb-note { position: absolute; right: 14px; bottom: 24px; max-width: 230px; padding: 16px 18px; border-radius: 20px; font-size: 14px; color: #dbe4e2; }
+    .portrait::before { content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none; background: radial-gradient(circle at 30% 18%, rgba(255,255,255,.16), transparent 30%), linear-gradient(180deg, transparent 48%, rgba(4,8,12,.5) 100%); }
+    .portrait::after { content: ""; position: absolute; inset: 15px; z-index: 2; pointer-events: none; border-radius: inherit; border: 1px solid rgba(255,255,255,.2); }
+    .portrait-photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center center; filter: saturate(.9) contrast(1.04) brightness(.92); transform: scale(1.025); }
+    .orb-note { position: absolute; z-index: 3; right: 14px; bottom: 24px; max-width: 230px; padding: 16px 18px; border-radius: 20px; font-size: 14px; color: #dbe4e2; }
     .orb-note strong { display: block; color: white; margin-bottom: 3px; }
     section { padding: 72px 0; scroll-margin-top: 92px; }
     .section-head { display: flex; justify-content: space-between; align-items: end; gap: 30px; margin-bottom: 34px; }
     .section-head h2 { font: 700 clamp(2rem, 4vw, 3.6rem)/1.05 "Segoe UI Variable Display", "Segoe UI", system-ui, sans-serif; letter-spacing: -.045em; max-width: 12ch; }
     .section-head p { margin: 0; color: var(--muted); max-width: 500px; }
-    .about-grid { display: grid; grid-template-columns: 1.15fr .85fr; gap: 18px; }
+    .about-grid { display: grid; grid-template-columns: 1.08fr .92fr; gap: 18px; align-items: stretch; }
     .card { position: relative; border-radius: var(--radius); padding: clamp(24px, 4vw, 40px); overflow: hidden; }
     .card::before { content: ""; position: absolute; inset: 0 auto auto 0; width: 55%; height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,.5), transparent); }
-    .story p { color: #c2ccca; font-size: 18px; margin: 0 0 18px; }
-    .story p:last-child { margin-bottom: 0; }
-    .facts { display: grid; gap: 12px; }
-    .fact { display: flex; justify-content: space-between; gap: 20px; padding: 15px 0; border-bottom: 1px solid var(--line); }
-    .fact:last-child { border-bottom: 0; }
-    .fact span { color: var(--muted); }
-    .fact strong { text-align: right; }
+    .about-stories { display: grid; gap: 14px; }
+    .about-note { min-height: 190px; }
+    .about-note h3 { display: flex; align-items: center; gap: 11px; margin-bottom: 18px; font-size: 22px; }
+    .about-note h3::before { content: ""; width: 9px; height: 9px; border-radius: 3px; background: linear-gradient(135deg, var(--mint), var(--cyan)); box-shadow: 0 0 18px rgba(164,255,207,.5); }
+    .about-note p { color: #c2ccca; font-size: 17px; margin: 0; }
+    .facts { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .fact { min-height: 128px; display: flex; flex-direction: column; justify-content: space-between; gap: 14px; padding: 20px; border-radius: 22px; }
+    .fact:first-child { grid-column: 1 / -1; }
+    .fact span { color: var(--muted); font-size: 13px; text-transform: uppercase; letter-spacing: .08em; }
+    .fact strong { font-size: 17px; line-height: 1.35; }
     .stack { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
     .skill { min-height: 154px; display: flex; flex-direction: column; justify-content: space-between; padding: 22px; border-radius: 24px; }
     .skill b { font-size: 18px; }
@@ -155,6 +168,8 @@
       h1 { font-size: clamp(2.7rem, 16vw, 4.6rem); }
       .section-head { align-items: start; flex-direction: column; }
       .stack, .metrics, .timeline { grid-template-columns: 1fr; }
+      .facts { grid-template-columns: 1fr; }
+      .fact:first-child { grid-column: auto; }
       .skill { min-height: 128px; }
       .actions .btn { width: 100%; justify-content: center; }
       footer { flex-direction: column; }
@@ -189,8 +204,8 @@
           <a class="btn secondary" href="https://github.com/D1m4ik-creator" target="_blank" rel="noreferrer">Смотреть GitHub <span aria-hidden="true">↗</span></a>
         </div>
       </div>
-      <div class="portrait glass reveal" aria-label="Монограмма Дмитрия Литвинова">
-        <div class="initials">ДЛ</div>
+      <div class="portrait glass reveal">
+        <img class="portrait-photo" src="assets/dmitry-profile.png" alt="Портрет Дмитрия Литвинова">
         <div class="orb-note glass"><strong>Фокус сейчас</strong>Backend-архитектура, API и надёжные сервисы</div>
       </div>
     </header>
@@ -198,17 +213,16 @@
     <section id="about" class="wrap">
       <div class="section-head reveal"><h2>Человек, который любит разбираться в системах</h2><p>Интерес к разработке для меня — это сочетание инженерной точности, быстрого обучения и живой командной работы.</p></div>
       <div class="about-grid">
-        <article class="card glass story reveal">
-          <p>Мне нравится находить структуру в сложных задачах: разделять продукт на понятные сервисы, продумывать данные и собирать устойчивую серверную часть.</p>
-          <p>Вне учебных задач я участвую в ИТ-соревнованиях, собираю пет-проекты и осваиваю новые инструменты — от компьютерного зрения до AI-сценариев.</p>
-          <div class="qualities" aria-label="Личные качества"><span>Быстро адаптируюсь</span><span>Командный игрок</span><span>Пунктуален</span><span>Открыт к общению</span><span>Люблю порядок</span></div>
-        </article>
-        <aside class="card glass facts reveal">
-          <div class="fact"><span>Роль</span><strong>Junior Python Backend</strong></div>
-          <div class="fact"><span>Город</span><strong>Ростов-на-Дону</strong></div>
-          <div class="fact"><span>Образование</span><strong>ДГТУ · до 2028</strong></div>
-          <div class="fact"><span>Направление</span><strong>ИИ и матмоделирование</strong></div>
-          <div class="fact"><span>Английский</span><strong>B2</strong></div>
+        <div class="about-stories">
+          <article class="card glass about-note reveal"><h3>Как я работаю</h3><p>Нахожу структуру в сложных задачах: разделяю продукт на понятные сервисы, продумываю данные и собираю устойчивую серверную часть.</p></article>
+          <article class="card glass about-note reveal"><h3>Что меня увлекает</h3><p>Участвую в ИТ-соревнованиях, развиваю пет-проекты и осваиваю новые инструменты — от компьютерного зрения до AI-сценариев.</p><div class="qualities" aria-label="Личные качества"><span>Быстро адаптируюсь</span><span>Командный игрок</span><span>Пунктуален</span><span>Открыт к общению</span></div></article>
+        </div>
+        <aside class="facts reveal" aria-label="Краткая информация обо мне">
+          <div class="fact glass"><span>Профессиональный профиль</span><strong>Junior Python Backend-разработчик</strong></div>
+          <div class="fact glass"><span>Город</span><strong>Ростов-на-Дону</strong></div>
+          <div class="fact glass"><span>Образование</span><strong>ДГТУ · до 2028</strong></div>
+          <div class="fact glass"><span>Специализация</span><strong>ИИ и математическое моделирование</strong></div>
+          <div class="fact glass"><span>Английский</span><strong>Уровень B2</strong></div>
         </aside>
       </div>
     </section>
